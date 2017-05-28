@@ -126,9 +126,22 @@ Below image shows the left and right lane pixels identified in red and blue resp
 
 ![alt text][image4]
 
-#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+**5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.**
 
-I did this in lines # through # in my code in `my_other_file.py`
+The code for calculating radius of curvature is contained in the **_get_line_fits()_** function defined in the "Extract left and right lane fits from a warped binary image" section (7th cell) of the IPython notebook.
+
+* The curvature is calculated in meters
+* The left and right fit are recalculated for meters by applying a 'Pixel to Meter' conversion constanty to x and y values seperately
+    * Pixel to meter conversion for y is calculated as 30 / 720.  This is based on the assumption that 30m of lane fits the image height which is 720px
+    * Pixel to meter conversion for x is calculated as 30 / baseline_lane_width.  The baseline land width is calculated in function **_compute_lane_width_** using a standard straight line image.
+* The formula used is shown below.
+    
+```python
+    # Calculate the new radii of curvature
+    left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+    right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+```
+
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
@@ -151,26 +164,3 @@ Here's a [link to my video result](./project_video.mp4)
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
-
-```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-```
-
-This resulted in the following source and destination points:
-
-| Source        | Destination   | 
-|:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
