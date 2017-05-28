@@ -17,7 +17,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./camera_cal/corners_found9.jpg "Corners Found"
+[image1]: <img src="./camera_cal/corners_found9.jpg" width="200">
 [image2]: ./camera_cal/calibration1.jpg "Distorted"
 [image3]: ./camera_cal/test_undist.jpg "Undistorted"
 [image1]: ./examples/undistort_output.png "Undistorted"
