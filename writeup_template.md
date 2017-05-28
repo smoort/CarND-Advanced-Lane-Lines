@@ -19,7 +19,7 @@
 
 [image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
 [image2]: ./examples/BinaryThreshold.png "Binary Threshold Image"
-[image3]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image3]: ./examples/warped_straight_lines.png "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
