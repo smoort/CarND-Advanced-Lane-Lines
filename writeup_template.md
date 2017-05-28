@@ -17,7 +17,7 @@
 
 [//]: # (Image References)
 
-[image1]: <img src="./camera_cal/corners_found9.jpg" width="200">
+[image1]: ./camera_cal/corners_found9.jpg "Corners Found"
 [image2]: ./camera_cal/calibration1.jpg "Distorted"
 [image3]: ./camera_cal/test_undist.jpg "Undistorted"
 [image1]: ./examples/undistort_output.png "Undistorted"
@@ -45,7 +45,9 @@ The code for this step is contained in the **caliberate_camera()_** function def
 * The `objpoints` and `imgpoints` are used to compute the camera calibration and distortion coefficients using OpenCV's  _calibrateCamera()_ function.
 * The distortion coefficients obtained in the previous step are applied to correct the test image provided using OpenCV's' _undistort()_ function.  The resulting corrected image is shown below.
 
-![alt text][image1] ![alt text][image2] ![alt text][image3]
+<img src="./camera_cal/calibration1.jpg" width="400">    <img src="./camera_cal/test_undist.jpg" width="400">  
+
+![alt text][image1]
 
 ### Pipeline (single images)
 
