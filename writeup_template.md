@@ -17,10 +17,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./camera_cal/corners_found9.jpg "Corners Found"
-[image2]: ./camera_cal/calibration1.jpg "Distorted"
-[image3]: ./camera_cal/test_undist.jpg "Undistorted"
-[image1]: ./examples/undistort_output.png "Undistorted"
+[image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
@@ -49,12 +46,12 @@ Chessboard with corners found  <img src="./camera_cal/corners_found9.jpg" width=
 Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width="300"> <img src="./camera_cal/test_undist.jpg" width="300">
 
 
-### Pipeline (single images)
+### *Pipeline (single images)*
 
-#### 1. Provide an example of a distortion-corrected image.
+**1. Provide an example of a distortion-corrected image.**
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+The code for this step is contained in the "Undistortion Correction" section (14th cell) of the IPython notebook.  A sample image is read and undistorted using the coefficients calculated during camera caliberation.
+![alt text][image1]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
