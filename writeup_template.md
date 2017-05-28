@@ -22,7 +22,6 @@
 [image3]: ./examples/warped_straight_lines.png "Warp Example"
 [image4]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image5]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
 
 ---
 
@@ -185,13 +184,13 @@ The code for marking the lanes on a project video stream is contained in the "Pr
 
 **Project video results** - Please see git hub repo https://github.com/smoort/CarND-Advanced-Lane-Lines/
  
-Video Output                :  project_video_output.mp4 
-Video Output with dashboard :  project_video_output-dashboard.mp4
+1. Video Output                :  project_video_output.mp4 
+2. Video Output with dashboard :  project_video_output-dashboard.mp4
 
 **Challenge video results**
  
-Video Output                :  challenge_video_output.mp4 
-Video Output with dashboard :  challenge_video_output-dashboard.mp4
+1. Video Output                :  challenge_video_output.mp4 
+2. Video Output with dashboard :  challenge_video_output-dashboard.mp4
 
 ---
 
