@@ -19,8 +19,7 @@
 
 [image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
 [image2]: ./examples/BinaryThreshold.png "Binary Threshold Image"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image3]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
@@ -44,9 +43,10 @@ The code for this step is contained in the **_caliberate_camera()_** function de
 
 Chessboard with corners found  <img src="./camera_cal/corners_found9.jpg" width="600">
 Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width="300"> <img src="./camera_cal/test_undist.jpg" width="300">
-
-
-
+ 
+  
+   
+   
 ### *Pipeline (single images)*
 
 **1. Provide an example of a distortion-corrected image.**
@@ -63,21 +63,28 @@ Below are the steps taken to get a thresholded binary image :
 
 * The function takes in a 3 channel RGB olor image and returns a warped binary image with the lane markings.
 * The input image is first undistorted using the coefficients returned by camera caliberation.
-* The lighting conditions are determined by calculating the average luminosity of the bottom half.  A low value would indicate shady conditions or cloudy conditions.  Refer function  **_check_lighting_** under "Define support functions" section (3rd cell).
-* If the lighting conditions are poor, then the luminosity is augmented (similar to turning on 'Head Lights' during manual driving).  This is to correct the input image before feeding it into the pipeline.  Refer function  **_switch_on_headlights_** under "Define support functions" section (3rd cell).
+* The lighting conditions are determined by calculating the average luminosity of the bottom half.  A low value would indicate shady conditions or cloudy conditions.  Refer function  **_check_lighting()_** under "Define support functions" section (3rd cell).
+* If the lighting conditions are poor, then the luminosity is augmented (similar to turning on 'Head Lights' during manual driving).  This is to correct the input image before feeding it into the pipeline.  Refer function  **_switch_on_headlights()_** under "Define support functions" section (3rd cell).
 * Image is converted to grayscale for gradient thresholding.  Low intensity pixels are filtered out of the gray image to remove all black pixels from image.
 * Color threshold images on S and L channels of HLS color space are obtained.  Pixels present in both S and L threshold images are filtered out to form the final color threshold image. 
 * Gradient thresholds images on x and y directions are obtained.  Pixels present in both x and y direction threshold images are filtered out to form the final gradient threshold image. 
 * Combine the color and gradient thresholded images to form the final binary image.
 * Apply mask on the binary image to filter out only the region of interest (lanes)
 
-Below are images of the input, output and some of the intermediate filtered binary images.
-
+Below are images of the input, output and some of the intermediate images used in the processing.
 ![alt text][image2]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The code for calculating perspective M and Inverse perspective Minv is contained in the **_compute_perspective()_** function defined in the "Compute Perspective Transform" section (10th cell) of the IPython notebook.
+The code for invoking warp using perspective M is contained in the **_get_binary_warp()_** function defined in the "Extract warped binary image of the lanes" section (4th cell) of the IPython notebook.
+
+* Hard-coding approach for source and destination points has been taken for this project.
+* Different perspective for different terrain types (Freeway in Project video, Highway in Challenge video and Mountain roads in Harder challenge video)
+* The perspective transform M and inverse perspective transform Minv are calcuated using the source and destination points based on the terrain types
+* In the **_get_binary_warp()_** function, the final masked binary threshold image is warped using the perspective transform M.
+
+![alt text][image3]
 
 ```python
 src = np.float32(
