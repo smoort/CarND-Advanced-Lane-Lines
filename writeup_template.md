@@ -112,8 +112,8 @@ This resulted in the following source and destination points:
 
 | Sanity Type       | Check Applied                                                                     |  
 |:-----------------:|:---------------------------------------------------------------------------------:| 
-| Same Frame Check  | Minimum threshold for left and right lane Pixels Identified                       | 
-| Same Frame Check  | Verify Lane widths at base and top are reasonable                                 | 
+| Same Frame Check  | Minimum threshold for left and right lane Pixels Identified | 
+| Same Frame Check  | Verify Lane widths at base and top are reasonable| 
 | Same Frame Check  | Verify that left and right lane curvatures are within limits                      | 
 | Same Frame Check  | Verify that left and right lane curvatures are similar                            | 
 | Same Frame Check  | Verify that left and right fit 2nd order co-efficients are similar                | 
