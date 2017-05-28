@@ -51,13 +51,28 @@ Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width=
 **1. Provide an example of a distortion-corrected image.**
 
 The code for this step is contained in the "Undistortion Correction" section (14th cell) of the IPython notebook.  A sample image is read and undistorted using the coefficients calculated during camera caliberation.
+
 ![alt text][image1]
 
-#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+**2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.**
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+The code for this step is contained in the **get_binary_warp()_** function defined in the "Extract warped binary image of the lanes" section (4th cell) of the IPython notebook.
 
-![alt text][image3]
+Below are the steps taken to get a thresholded binary image :
+
+* The function takes in a 3 channel RGB olor image and returns a warped binary image with the lane markings.
+* The input image is first undistorted using the coefficients returned by camera caliberation.
+* The lighting conditions are determined by calculating the average luminosity of the bottom half.  A low value would indicate shady conditions or cloudy conditions.  Refer function  **__check_lighting__** under "Define support functions" section (3rd cell).
+* If the lighting conditions are poor, then the luminosity is augmented (similar to turning on 'Head Lights' during manual driving).  This is to correct the input image before feeding it into the pipeline.  Refer function  **__switch_on_headlights__** under "Define support functions" section (3rd cell).
+* Image is converted to grayscale for gradient thresholding.  Low intensity pixels are filtered out of the gray image to remove all black pixels from image.
+* Color threshold images on S and L channels of HLS color space are obtained.  Pixels present in both S and L threshold images are filtered out to form the final color threshold image. 
+* Gradient thresholds images on x and y directions are obtained.  Pixels present in both x and y direction threshold images are filtered out to form the final gradient threshold image. 
+* Combine the color and gradient thresholded images to form the final binary image.
+* Apply mask on the binary image to filter out only the region of interest (lanes)
+
+Below are images of the input, output and some of the intermediate filtered binary images.
+
+![alt text][image2]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
