@@ -215,8 +215,8 @@ The code for marking the lanes on a project video stream is contained in the "Pr
 
 ### **Stand Out implementations**
 
-*The below stand out requirement has been implemented in the _get_line_fits()_ function.*
-"__For a standout submission, you should follow the suggestion in the lesson to not just search blindly for the lane lines in each frame of video, but rather, once you have a high-confidence detection, use that to inform the search for the position of the lines in subsequent frames of video. For example, if a polynomial fit was found to be robust in the previous frame, then rather than search the entire next frame for the lines, just a window around the previous detection could be searched. This will improve speed and provide a more robust method for rejecting outliers.__"
+**The below stand out requirement has been implemented in the _get_line_fits()_ function.**  
+"_For a standout submission, you should follow the suggestion in the lesson to not just search blindly for the lane lines in each frame of video, but rather, once you have a high-confidence detection, use that to inform the search for the position of the lines in subsequent frames of video. For example, if a polynomial fit was found to be robust in the previous frame, then rather than search the entire next frame for the lines, just a window around the previous detection could be searched. This will improve speed and provide a more robust method for rejecting outliers._"
 
 *Outlier rejection has been implemented in the form of masking.  Low-pass filter has been added to the sanity check function _sanity_check_lanes()_.  Smoothing has also been implemented for the line fit co-effecients inside the _get_line_fits()_ function.*
 "__For an additional improvement you should implement outlier rejection and use a low-pass filter to smooth the lane detection over frames, meaning add each new detection to a weighted mean of the position of the lines to avoid jitter.__"
