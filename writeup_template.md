@@ -183,15 +183,15 @@ The code for marking the lanes on a project video stream is contained in the "Pr
 * The video stream is read - for each image clip in the video frame, the lane marker pipeline is applied.
 * The processed images are built into a video output
 
-**Project video results**
+**Project video results** - Please see git hub repo https://github.com/smoort/CarND-Advanced-Lane-Lines/
  
-Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output.mp4
-Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output-dashboard.mp4
+Video Output                :  project_video_output.mp4 
+Video Output with dashboard :  project_video_output-dashboard.mp4
 
 **Challenge video results**
  
-Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/blob/master/challenge_video_output.mp4
-Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/blob/master/challenge_video_output-dashboard.mp4
+Video Output                :  challenge_video_output.mp4 
+Video Output with dashboard :  challenge_video_output-dashboard.mp4
 
 ---
 
