@@ -18,7 +18,7 @@
 [//]: # (Image References)
 
 [image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
-[image2]: ./test_images/test1.jpg "Road Transformed"
+[image2]: ./examples/BinaryThreshold.png "Binary Threshold Image"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
@@ -63,8 +63,8 @@ Below are the steps taken to get a thresholded binary image :
 
 * The function takes in a 3 channel RGB olor image and returns a warped binary image with the lane markings.
 * The input image is first undistorted using the coefficients returned by camera caliberation.
-* The lighting conditions are determined by calculating the average luminosity of the bottom half.  A low value would indicate shady conditions or cloudy conditions.  Refer function  **__check_lighting__** under "Define support functions" section (3rd cell).
-* If the lighting conditions are poor, then the luminosity is augmented (similar to turning on 'Head Lights' during manual driving).  This is to correct the input image before feeding it into the pipeline.  Refer function  **__switch_on_headlights__** under "Define support functions" section (3rd cell).
+* The lighting conditions are determined by calculating the average luminosity of the bottom half.  A low value would indicate shady conditions or cloudy conditions.  Refer function  **_check_lighting_** under "Define support functions" section (3rd cell).
+* If the lighting conditions are poor, then the luminosity is augmented (similar to turning on 'Head Lights' during manual driving).  This is to correct the input image before feeding it into the pipeline.  Refer function  **_switch_on_headlights_** under "Define support functions" section (3rd cell).
 * Image is converted to grayscale for gradient thresholding.  Low intensity pixels are filtered out of the gray image to remove all black pixels from image.
 * Color threshold images on S and L channels of HLS color space are obtained.  Pixels present in both S and L threshold images are filtered out to form the final color threshold image. 
 * Gradient thresholds images on x and y directions are obtained.  Pixels present in both x and y direction threshold images are filtered out to form the final gradient threshold image. 
