@@ -30,7 +30,7 @@
 
 **1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.**
 
-The code for this step is contained in the **_caliberate_camera()_** function defined in the "Caliberate Camera" section (10th cell) of the IPython notebook.  
+The code for this step is contained in the **_caliberate_camera()_** function defined in the "Caliberate Camera" section (9th cell) of the IPython notebook.  
 
 * Calibration is done using a set of standard chessboard images that are available in the 'camera_cal/' folder.
 * Object points are chosen as the corners of the 9x6 chessboard.  The chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  The object points will be the array of coordinates of the chessboard corners.
@@ -51,7 +51,7 @@ Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width=
 
 **1. Provide an example of a distortion-corrected image.**
 
-The code for this step is contained in the "Undistortion Correction" section (14th cell) of the IPython notebook.  A sample image is read and undistorted using the coefficients calculated during camera caliberation.
+The code for this step is contained in the "Undistortion Correction" section (12th cell) of the IPython notebook.  A sample image is read and undistorted using the coefficients calculated during camera caliberation.
 
 ![alt text][image1]
 
@@ -104,6 +104,7 @@ Below is the algorithm used to get the left and right lane fits from a given bin
     1. If the sanity checks pass, then the current frame is deemed good and a new line object with the current lane parameters is created.
     2. If the line is good, then the co-efficient values are smoothed over the last 5 frames for smoothing purposes.
     3. If the sanity checks fail, then the current frame is deemed bad and the previous frame parameters are set for the current frame line object.
+    4. If the sanity checks fail, the bad line counter is increamented by 1.  If more than 3 consequtive bad lines lines are identified, then the flag to detect fresh lanes is switched on.
 7. The line object is added to a list (detected_lines[]) so that it can be used in subsequent frames for smoothing
 
 Below are the sanity check rules that have been applied :
@@ -112,9 +113,9 @@ This resulted in the following source and destination points:
 
 | Sanity Type       | Check Applied                                                                     |  
 |:-----------------:|:---------------------------------------------------------------------------------:| 
-| Same Frame Check  | Minimum threshold for left and right lane Pixels Identified | 
-| Same Frame Check  | Verify Lane widths at base and top are reasonable| 
-| Same Frame Check  | Verify that left and right lane curvatures are within limits                      | 
+| Same Frame Check  | Verify that left and right lanes have sufficient pixels to get good line fits     | 
+| Same Frame Check  | Verify lane widths at base and top are within reasonable limits                   | 
+| Same Frame Check  | Verify that left and right lane curvatures are within reasonable limits           | 
 | Same Frame Check  | Verify that left and right lane curvatures are similar                            | 
 | Same Frame Check  | Verify that left and right fit 2nd order co-efficients are similar                | 
 | Same Frame Check  | Verify that left and right fit 1st order co-efficients are similar                | 
@@ -128,26 +129,40 @@ Below image shows the left and right lane pixels identified in red and blue resp
 
 **5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.**
 
-The code for calculating radius of curvature is contained in the **_get_line_fits()_** function defined in the "Extract left and right lane fits from a warped binary image" section (7th cell) of the IPython notebook.
+The code for calculating radius of curvature and position of the vehicle is contained in the **_get_line_fits()_** function defined in the "Extract left and right lane fits from a warped binary image" section (7th cell) of the IPython notebook.
 
 * The curvature is calculated in meters
+* The overall curvature is calcuated as the average of left and right curvatures
 * The left and right fit are recalculated for meters by applying a 'Pixel to Meter' conversion constanty to x and y values seperately
     * Pixel to meter conversion for y is calculated as 30 / 720.  This is based on the assumption that 30m of lane fits the image height which is 720px
     * Pixel to meter conversion for x is calculated as 30 / baseline_lane_width.  The baseline land width is calculated in function **_compute_lane_width_** using a standard straight line image.
 * The formula used is shown below.
-    
 ```python
     # Calculate the new radii of curvature
     left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
     right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
 ```
 
+* The position of the vehicle is determined using the below logic:
+    *  The lane width is calcuated using the x value of the left and right lanes at the base
+    *  The lane center is calculated by adding one half of the lane width to the left lane x
+    *  Image center is calculated as the midpoint of the image (Image width / 2)
+    *  The vehicle offset from lane center is calcuated as the difference between the image center and lane center
+        * If the difference is positive, then the vehicle is to the right of lane center
+        * If the difference is negative, then the vehicle is to the left of lane center
+    *  Values are converted from pixel to meters using the conversion rate calcuated earlier.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+The code for plotting the identified lanes back down onto the road is contained in the **_lane_marker_pipeline()_** function defined in the "Lane Marker Pipeline" section (8th cell) of the IPython notebook.
 
-![alt text][image6]
+* Evenly distributed y values are calcuated for the height of the image (0 to 720) using the numpy.linespace function
+* The left and right x values are calcuated using the smoothened left and right fits respectively.
+* The left lane, right lane and region inbetween are shaded in red, blue and green respectively.
+* The lines are then warped using inverse perspective
+* The inverse warped lines are then overlayed on the orignal image to mark the lanes.
+
+![alt text][image5]
 
 ---
 
