@@ -32,7 +32,7 @@
 
 ### *Camera Calibration*
 
-** 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+** 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image. **
 
 The code for this step is contained in the **caliberate_camera()_** function defined in the "Caliberate Camera" section (10th cell) of the IPython notebook.  
 
@@ -45,7 +45,7 @@ The code for this step is contained in the **caliberate_camera()_** function def
 * The `objpoints` and `imgpoints` are used to compute the camera calibration and distortion coefficients using OpenCV's  _calibrateCamera()_ function.
 * The distortion coefficients obtained in the previous step are applied to correct the test image provided using OpenCV's' _undistort()_ function.  The resulting corrected image is shown below.
 
-![alt text][image1]    ![alt text][image2]      ![alt text][image3]
+![alt text][image1] ![alt text][image2] ![alt text][image3]
 
 ### Pipeline (single images)
 
