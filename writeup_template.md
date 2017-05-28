@@ -97,15 +97,15 @@ Below is the algorithm used to get the left and right lane fits from a given bin
 
 1. Check if fresh lanes have to be identified.  This will be needed for the very first frame and also when there have been a few consequtive bad lanes
     1. If fresh lanes detection is needed, calculate fresh left and right lane pixels using using the sliding window technique.
-    2. If fresh lanes detection is not needed, use the left and right fit from the previous good frame and calculate the x & y indices for the current frame
+    2. **Look-Ahead Filter** - If fresh lanes detection is not needed, use the left and right fit from the previous good frame and calculate the x & y indices for the current frame
 2. If there are 0 pixels are identified, then use the previous frame pixels.  This can happen in low-light conditions like shades, underpass etc.
 3. Find the new left and right lane fits for the current frame from the pixels identified.
-4. Sanity check is done on the identified lane (like lane width, curvature etc).  The function **_sanity_check_lanes()_** is used to perform these checks.
+4. **Sanity Check** : Sanity check is done on the identified lane (like lane width, curvature etc).  The function **_sanity_check_lanes()_** is used to perform these checks.
     1. If the sanity checks pass, then the current frame is deemed good and a new line object with the current lane parameters is created.
-    2. If the line is good, then the co-efficient values are smoothed over the last 5 frames for smoothing purposes.
+    2. **Smoothing** - If the line is good, then the co-efficient values are smoothed over the last 5 frames for smoothing purposes.
     3. If the sanity checks fail, then the current frame is deemed bad and the previous frame parameters are set for the current frame line object.
-    4. If the sanity checks fail, the bad line counter is increamented by 1.  If more than 3 consequtive bad lines lines are identified, then the flag to detect fresh lanes is switched on.
-7. The line object is added to a list (detected_lines[]) so that it can be used in subsequent frames for smoothing
+    4. **Reset** - If the sanity checks fail, the bad line counter is increamented by 1.  If more than 3 consequtive bad lines lines are identified, then the flag to detect fresh lanes is switched on.
+7. **Tracking** : The line object is added to a list (detected_lines[]) so that it can be used in subsequent frames for smoothing
 
 Below are the sanity check rules that have been applied :
 
@@ -152,7 +152,7 @@ The code for calculating radius of curvature and position of the vehicle is cont
         * If the difference is negative, then the vehicle is to the left of lane center
     *  Values are converted from pixel to meters using the conversion rate calcuated earlier.
 
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+**6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.**
 
 The code for plotting the identified lanes back down onto the road is contained in the **_lane_marker_pipeline()_** function defined in the "Lane Marker Pipeline" section (8th cell) of the IPython notebook.
 
@@ -164,18 +164,48 @@ The code for plotting the identified lanes back down onto the road is contained 
 
 ![alt text][image5]
 
+
+**
 ---
 
-### Pipeline (video)
+### *Pipeline (video)*
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+***1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).***
 
-Here's a [link to my video result](./project_video.mp4)
+The code for marking the lanes on a project video stream is contained in the "Project Video" section of the IPython notebook.  The challenge and harder challenge video sections are in the sections below the project video section in the IPython notebook.
+
+* The fresh lanes detection flag (reset_lanes) is turned on
+* The list to hold detected lines is initialized
+* Terrain type is set to freeway - the perspective for freeway is chosen accordingly
+* Camera is caliberated and undistortion coefficients are obtained
+* Perspective transform M and Inverse transform Minv are calcuated
+* Baseline width is calcuated using a standar image
+* The video stream is read - for each image clip in the video frame, the lane marker pipeline is applied.
+* The processed images are built into a video output
+
+**Project video results**
+Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output.mp4
+Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output-dashboard.mp4
+
+**Challenge video results**
+Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/challenge_video_output.mp4
+Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/challenge_video_output-dashboard.mp4
 
 ---
 
-### Discussion
+### *Discussion*
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+**1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?**
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+*Problems / issues faced*
+
+* The perspective for warping images has to be different for differnt terrains.  As hard coded source and destination points are used, the pipeline is not able to support roads with different curvature.
+* It is challenging to find the lane markings under low-light (shadow), especially when the lane color is light.
+* Wind screen glare and very high bright spots make lane detection difficult (harder challenge video)
+
+*Where will the pipeline likely fail*
+* Terrain with different varying curvatures.
+
+*What could you do to make it more robust?*
+* Dynamic perspective transform calculation will make the solution robust
+* Normalizing images with wind screen glare and bright spots will help in improving lane detection.
