@@ -31,7 +31,7 @@
 
 **1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.**
 
-The code for this step is contained in the **caliberate_camera()_** function defined in the "Caliberate Camera" section (10th cell) of the IPython notebook.  
+The code for this step is contained in the **_caliberate_camera()_** function defined in the "Caliberate Camera" section (10th cell) of the IPython notebook.  
 
 * Calibration is done using a set of standard chessboard images that are available in the 'camera_cal/' folder.
 * Object points are chosen as the corners of the 9x6 chessboard.  The chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  The object points will be the array of coordinates of the chessboard corners.
@@ -46,6 +46,7 @@ Chessboard with corners found  <img src="./camera_cal/corners_found9.jpg" width=
 Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width="300"> <img src="./camera_cal/test_undist.jpg" width="300">
 
 
+
 ### *Pipeline (single images)*
 
 **1. Provide an example of a distortion-corrected image.**
@@ -56,7 +57,7 @@ The code for this step is contained in the "Undistortion Correction" section (14
 
 **2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.**
 
-The code for this step is contained in the **get_binary_warp()_** function defined in the "Extract warped binary image of the lanes" section (4th cell) of the IPython notebook.
+The code for this step is contained in the **_get_binary_warp()_** function defined in the "Extract warped binary image of the lanes" section (4th cell) of the IPython notebook.
 
 Below are the steps taken to get a thresholded binary image :
 
