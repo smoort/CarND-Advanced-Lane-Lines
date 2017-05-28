@@ -184,12 +184,14 @@ The code for marking the lanes on a project video stream is contained in the "Pr
 * The processed images are built into a video output
 
 **Project video results**
+ 
 Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output.mp4
 Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/project_video_output-dashboard.mp4
 
 **Challenge video results**
-Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/challenge_video_output.mp4
-Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/challenge_video_output-dashboard.mp4
+ 
+Video Output                :  https://github.com/smoort/CarND-Advanced-Lane-Lines/blob/master/challenge_video_output.mp4
+Video Output with dashboard :  https://github.com/smoort/CarND-Advanced-Lane-Lines/blob/master/challenge_video_output-dashboard.mp4
 
 ---
 
