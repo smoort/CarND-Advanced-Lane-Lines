@@ -46,8 +46,7 @@ The code for this step is contained in the **caliberate_camera()_** function def
 * The distortion coefficients obtained in the previous step are applied to correct the test image provided using OpenCV's' _undistort()_ function.  The resulting corrected image is shown below.
 
 Chessboard with corners found  <img src="./camera_cal/corners_found9.jpg" width="600">
-Distorted image for testing <img src="./camera_cal/calibration1.jpg" width="400">
-Undistorted image after correction <img src="./camera_cal/test_undist.jpg" width="400">
+Distorted and Undistorted images <img src="./camera_cal/calibration1.jpg" width="400"> <img src="./camera_cal/test_undist.jpg" width="400">
 
 
 ### Pipeline (single images)
