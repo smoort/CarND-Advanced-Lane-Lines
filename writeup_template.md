@@ -20,7 +20,7 @@
 [image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
 [image2]: ./examples/BinaryThreshold.png "Binary Threshold Image"
 [image3]: ./examples/warped_straight_lines.png "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image4]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
@@ -74,7 +74,7 @@ Below are the steps taken to get a thresholded binary image :
 Below are images of the input, output and some of the intermediate images used in the processing.
 ![alt text][image2]
 
-#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+**3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.**
 
 The code for calculating perspective M and Inverse perspective Minv is contained in the **_compute_perspective()_** function defined in the "Compute Perspective Transform" section (10th cell) of the IPython notebook.
 The code for invoking warp using perspective M is contained in the **_get_binary_warp()_** function defined in the "Extract warped binary image of the lanes" section (4th cell) of the IPython notebook.
@@ -84,39 +84,47 @@ The code for invoking warp using perspective M is contained in the **_get_binary
 * The perspective transform M and inverse perspective transform Minv are calcuated using the source and destination points based on the terrain types
 * In the **_get_binary_warp()_** function, the final masked binary threshold image is warped using the perspective transform M.
 
+The perspective transform was verified on a test image and the results are shown below.
+
 ![alt text][image3]
 
-```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-```
+
+**4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial**
+
+The code for getting the left and right lane fits is contained in the **_get_line_fits()_** function defined in the "Extract left and right lane fits from a warped binary image" section (7th cell) of the IPython notebook.
+
+Below is the algorithm used to get the left and right lane fits from a given binary thresholded warped image of the lanes :
+
+1. Check if fresh lanes have to be identified.  This will be needed for the very first frame and also when there have been a few consequtive bad lanes
+    1. If fresh lanes detection is needed, calculate fresh left and right lane pixels using using the sliding window technique.
+    2. If fresh lanes detection is not needed, use the left and right fit from the previous good frame and calculate the x & y indices for the current frame
+2. If there are 0 pixels are identified, then use the previous frame pixels.  This can happen in low-light conditions like shades, underpass etc.
+3. Find the new left and right lane fits for the current frame from the pixels identified.
+4. Sanity check is done on the identified lane (like lane width, curvature etc).  The function **_sanity_check_lanes()_** is used to perform these checks.
+    1. If the sanity checks pass, then the current frame is deemed good and a new line object with the current lane parameters is created.
+    2. If the line is good, then the co-efficient values are smoothed over the last 5 frames for smoothing purposes.
+    3. If the sanity checks fail, then the current frame is deemed bad and the previous frame parameters are set for the current frame line object.
+7. The line object is added to a list (detected_lines[]) so that it can be used in subsequent frames for smoothing
+
+Below are the sanity check rules that have been applied :
 
 This resulted in the following source and destination points:
 
-| Source        | Destination   | 
-|:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| Sanity Type       | Check Applied                                                                     |  
+|:-----------------:|:---------------------------------------------------------------------------------:| 
+| Same Frame Check  | Minimum threshold for left and right lane Pixels Identified                       | 
+| Same Frame Check  | Verify Lane widths at base and top are reasonable                                 | 
+| Same Frame Check  | Verify that left and right lane curvatures are within limits                      | 
+| Same Frame Check  | Verify that left and right lane curvatures are similar                            | 
+| Same Frame Check  | Verify that left and right fit 2nd order co-efficients are similar                | 
+| Same Frame Check  | Verify that left and right fit 1st order co-efficients are similar                | 
+| Prev Frame Check  | Verify that left and right base x values are similar to values from prev frame    |
+| Prev Frame Check  | Verify that left and right curvature values are similar to values from prev frame |
+| Prev Frame Check  | Verify that offset from center value is similar to value from prev frame          |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+Below image shows the left and right lane pixels identified in red and blue respectively:
 
 ![alt text][image4]
-
-#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
-
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
-
-![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
@@ -143,3 +151,26 @@ Here's a [link to my video result](./project_video.mp4)
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+
+
+```python
+src = np.float32(
+    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
+    [((img_size[0] / 6) - 10), img_size[1]],
+    [(img_size[0] * 5 / 6) + 60, img_size[1]],
+    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
+dst = np.float32(
+    [[(img_size[0] / 4), 0],
+    [(img_size[0] / 4), img_size[1]],
+    [(img_size[0] * 3 / 4), img_size[1]],
+    [(img_size[0] * 3 / 4), 0]])
+```
+
+This resulted in the following source and destination points:
+
+| Source        | Destination   | 
+|:-------------:|:-------------:| 
+| 585, 460      | 320, 0        | 
+| 203, 720      | 320, 720      |
+| 1127, 720     | 960, 720      |
+| 695, 460      | 960, 0        |
