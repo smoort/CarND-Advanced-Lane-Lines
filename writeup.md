@@ -2,7 +2,7 @@
 
 ### This is a write up on the Advanced Lane Finding project
 
-The code for this project can be found within the FindLane.ipynb jupyter notebook
+The code for this project can be found within the **_FindLane.ipynb_** jupyter notebook
 
 ---
 
