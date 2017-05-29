@@ -2,6 +2,8 @@
 
 ### This is a write up on the Advanced Lane Finding project
 
+The code for this project can be found within the FindLane.ipynb jupyter notebook
+
 ---
 
 ### **Goals of the Advanced Lane Finding Project**
@@ -17,11 +19,11 @@
 
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Distorted and Undistorted images"
-[image2]: ./examples/BinaryThreshold.png "Binary Threshold Image"
-[image3]: ./examples/warped_straight_lines.png "Warp Example"
-[image4]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image5]: ./examples/example_output.jpg "Output"
+[image1]: ./output_images/undistort_output.png "Distorted and Undistorted images"
+[image2]: ./output_images/BinaryThreshold.png "Binary Threshold Image"
+[image3]: ./output_images/warped_straight_lines.png "Warp Example"
+[image4]: ./output_images/color_fit_lines.jpg "Fit Visual"
+[image5]: ./output_images/example_output.jpg "Output"
 
 ---
 
